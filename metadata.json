@@ -1,0 +1,11 @@
+{
+  "name": "ActiWard AI",
+  "description": "An AI-powered hyperlocal civic issue reporting and resolution platform enabling citizens to report and resolve local issues, earn rewards, and connect with local authorities.",
+  "requestFramePermissions": [
+    "camera",
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
