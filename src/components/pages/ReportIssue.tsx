@@ -148,13 +148,7 @@ const [aiLoading, setAiLoading] = useState(false);
   setAiLoading(true);
 
   try {
-
-    const response = await analyzeIssue(category, description);
-
-    const result = JSON.parse(
-      response.replace(/```json|```/g, "")
-    );
-
+const result = await analyzeIssue(category, description);
     
     setAiResult(result);
 

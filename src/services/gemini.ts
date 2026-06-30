@@ -25,17 +25,25 @@ Return ONLY valid JSON in this format:
 }
 `;
 
-  const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
-    contents: prompt,
-  });
+ const response = await ai.models.generateContent({
+  model: "gemini-2.5-flash",
+  contents: prompt,
+});
 
-  const text = response.text ?? "";
+console.log("FULL RESPONSE:", response);
 
-  const cleaned = text
-    .replace(/```json/g, "")
-    .replace(/```/g, "")
-    .trim();
+const text = response.text;
 
-  return JSON.parse(cleaned);
+console.log("TEXT:", text);
+
+const cleaned = String(text)
+  .replace(/```json/g, "")
+  .replace(/```/g, "")
+  .trim();
+
+console.log("CLEANED:", cleaned);
+
+return JSON.parse(cleaned);
+
+return JSON.parse(cleaned);
 }
