@@ -1,18 +1,11 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenAI } from "@google/genai";
 
-const genAI = new GoogleGenerativeAI(
-  (import.meta as any).env.VITE_GEMINI_API_KEY
-);
-
-const model = genAI.getGenerativeModel({
-  model: "gemini-2.5-flash",
+const ai = new GoogleGenAI({
+  apiKey: import.meta.env.VITE_GEMINI_API_KEY,
 });
 
-export async function analyzeIssue(
-  category: string,
-  description: string
-) {
- const prompt = `
+export async function analyzeIssue(category: string, description: string) {
+  const prompt = `
 You are an AI civic assistant.
 
 Analyze the following civic issue.
@@ -21,7 +14,7 @@ Category: ${category}
 
 Description: ${description}
 
-Return ONLY valid JSON in this exact format.
+Return ONLY valid JSON in this format:
 
 {
   "severity":"",
@@ -30,23 +23,19 @@ Return ONLY valid JSON in this exact format.
   "confidence":"",
   "recommendedAction":""
 }
-
-Rules:
-
-- severity should be Low, Medium or High.
-- confidence should be a percentage like "95%".
-- department should be the correct municipal department.
-- summary should be 2-3 lines.
-- recommendedAction should be one short sentence explaining what the municipal authority should do.
 `;
-const result = await model.generateContent(prompt);
 
-const text = result.response.text();
+  const response = await ai.models.generateContent({
+    model: "gemini-2.5-flash",
+    contents: prompt,
+  });
 
-const cleaned = text
-  .replace(/```json/g, "")
-  .replace(/```/g, "")
-  .trim();
+  const text = response.text ?? "";
 
-return JSON.parse(cleaned);
+  const cleaned = text
+    .replace(/```json/g, "")
+    .replace(/```/g, "")
+    .trim();
+
+  return JSON.parse(cleaned);
 }
