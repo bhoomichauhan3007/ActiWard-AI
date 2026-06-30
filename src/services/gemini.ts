@@ -1,8 +1,12 @@
 import { GoogleGenAI } from "@google/genai";
 
+
 const ai = new GoogleGenAI({
   apiKey: (import.meta as any).env?.VITE_GEMINI_API_KEY,
 });
+
+console.log("ENV:", (import.meta as any).env);
+console.log("KEY:", (import.meta as any).env?.VITE_GEMINI_API_KEY);
 
 export async function analyzeIssue(category: string, description: string) {
   const prompt = `
@@ -32,7 +36,9 @@ Return ONLY valid JSON in this format:
 
 console.log("FULL RESPONSE:", response);
 
-const text = response.text;
+const text = String(response.text);
+console.log("Response:", response);
+console.log("Text:", text);
 
 console.log("TEXT:", text);
 
@@ -43,7 +49,6 @@ const cleaned = String(text)
 
 console.log("CLEANED:", cleaned);
 
-return JSON.parse(cleaned);
 
 return JSON.parse(cleaned);
 }
