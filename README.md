@@ -118,7 +118,7 @@ npm run dev
 Create a `.env.local` file and add your Gemini API key:
 
 ```env
-GEMINI_API_KEY=YOUR_API_KEY
+VITE_GEMINI_API_KEY=YOUR_API_KEY
 ```
 
 ---
